@@ -273,7 +273,7 @@ const PainPointCard: React.FC<{
   const cardClasses = `
     p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer group
     ${isSelected 
-      ? 'bg-lab-lavender/30 border-brand-primary shadow-xl scale-105' 
+      ? 'bg-lab-lavender/30 border-brand-primary shadow-xl -translate-y-1' 
       : 'bg-white border-gray-200 hover:shadow-lg hover:border-lab-blue hover:-translate-y-1'
     }
   `;
@@ -342,7 +342,7 @@ const PainPointsSection: React.FC<PainPointsSectionProps> = ({ selectedPainPoint
             Selecione os cards que ressoam com sua realidade e, dentro deles, marque os pontos específicos para um diagnóstico preciso.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto items-start">
           {PAIN_POINTS.map(pp => (
              <PainPointCard 
                 key={pp.id}
