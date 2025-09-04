@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useRef, useMemo, ComponentType } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -291,9 +292,9 @@ const PainPointCard: React.FC<{
         <span className={`font-semibold text-sm uppercase tracking-wider ${isSelected ? 'text-brand-primary' : 'text-gray-500'}`}>{category}</span>
       </div>
 
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-xl font-bold text-brand-text mr-2">{title}</h3>
-        <div className="flex-shrink-0 transition-opacity duration-300">
+      <div className="flex items-start gap-2 mb-2">
+        <h3 className="flex-1 text-xl font-bold text-brand-text">{title}</h3>
+        <div className="flex-shrink-0">
           {isSelected ? (
               <CheckCircleIcon className="w-8 h-8 text-brand-primary" />
           ) : (
