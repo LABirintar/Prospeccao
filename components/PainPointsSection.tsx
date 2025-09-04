@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PAIN_POINTS } from '../constants';
 import { PainPoint } from '../types';
@@ -20,9 +21,9 @@ const PainPointCard: React.FC<{
   const { id, category, title, shortDescription, details, icon: Icon } = painPoint;
   
   const cardClasses = `
-    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer relative group
+    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer group
     ${isSelected 
-      ? 'bg-lab-lavender/30 border-brand-primary shadow-xl scale-105' 
+      ? 'bg-lab-lavender/30 border-brand-primary shadow-xl -translate-y-1' 
       : 'bg-white border-gray-200 hover:shadow-lg hover:border-lab-blue hover:-translate-y-1'
     }
   `;
@@ -35,20 +36,24 @@ const PainPointCard: React.FC<{
 
   return (
     <div className={cardClasses} onClick={() => onSelect(id)}>
-      <div className="absolute top-4 right-4 transition-opacity duration-300">
-        {isSelected ? (
-            <CheckCircleIcon className="w-8 h-8 text-brand-primary" />
-        ) : (
-            <EmptyCircleIcon className="w-8 h-8 text-gray-300 group-hover:text-lab-blue" />
-        )}
-      </div>
-
       <div className="flex items-center mb-4">
         <Icon className={`w-10 h-10 mr-4 ${iconColor}`} />
         <span className={`font-semibold text-sm uppercase tracking-wider ${isSelected ? 'text-brand-primary' : 'text-gray-500'}`}>{category}</span>
       </div>
-      <h3 className="text-xl font-bold text-brand-text mb-2">{title}</h3>
+
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-xl font-bold text-brand-text mr-2">{title}</h3>
+        <div className="flex-shrink-0 transition-opacity duration-300">
+          {isSelected ? (
+              <CheckCircleIcon className="w-8 h-8 text-brand-primary" />
+          ) : (
+              <EmptyCircleIcon className="w-8 h-8 text-gray-300 group-hover:text-lab-blue" />
+          )}
+        </div>
+      </div>
+      
       <p className="text-brand-text-light text-sm flex-grow">{shortDescription}</p>
+      
       {isSelected && (
         <div className="mt-4 pt-4 border-t border-brand-primary/20">
             <p className="text-sm font-semibold text-brand-text mb-2">Marque os pontos específicos:</p>
@@ -87,7 +92,7 @@ const PainPointsSection: React.FC<PainPointsSectionProps> = ({ selectedPainPoint
             Selecione os cards que ressoam com sua realidade e, dentro deles, marque os pontos específicos para um diagnóstico preciso.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto items-start">
           {PAIN_POINTS.map(pp => (
              <PainPointCard 
                 key={pp.id}
