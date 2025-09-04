@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 
 // !!! IMPORTANT !!!
 // Replace this with your actual Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHGM_KL29i_VBETUYstMrUF-fcye_KRoIaYpK6IlOq0aHheXda3M6x-b-1KQ0EH8bu/exec';
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SHEET_WEB_APP_URL';
 
 const App: React.FC = () => {
   const [selectedPainPointIds, setSelectedPainPointIds] = useState<string[]>([]);
