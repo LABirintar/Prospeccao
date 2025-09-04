@@ -220,7 +220,7 @@ const TESTIMONIALS: Testimonial[] = [
 
 // --- CONFIGURATION ---
 // Insira o caminho para o seu arquivo de logo aqui. Ex: 'images/meu-logo.svg'
-const LOGO_IMAGE_PATH = 'components/IMG_4984.png'; 
+const LOGO_IMAGE_PATH = 'images/IMG_4984.png'; 
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHGM_KL29i_VBETUYstMrUF-fcye_KRoIaYpK6IlOq0aHheXda3M6x-b-1KQ0EH8bu/exec';
 
 
