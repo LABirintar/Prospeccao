@@ -73,7 +73,7 @@ const CustomPainPoints: React.FC<CustomPainPointsProps> = ({
                 />
             </div>
             <div className="text-center">
-                <label htmlFor="whatsapp" className="block font-semibold text-brand-text mb-2">Seu WhatsApp para receber o relatório em PDF</label>
+                <label htmlFor="whatsapp" className="block font-semibold text-brand-text mb-2">Seu WhatsApp</label>
                 <input
                   type="tel"
                   id="whatsapp"

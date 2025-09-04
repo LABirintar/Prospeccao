@@ -1,3 +1,4 @@
+
 import { PainPoint, Solution, Testimonial } from './types';
 import { FinancialIcon, OperationalIcon, PedagogicalIcon, EngagementIcon, MarketIcon } from './components/icons';
 
@@ -26,7 +27,7 @@ export const PAIN_POINTS: PainPoint[] = [
         'Gerir múltiplos parceiros com processos descentralizados.',
         'Integrar soluções de gestão fragmentadas (cantina, RH, etc.).',
         'Reduzir a sobrecarga de coordenadores com tarefas administrativas.',
-        'Diminuir a alta rotatividade da equipe, especialmente na ed. infantil.',
+        'Diminuir a alta rotatividade da equipe.',
         'Aliviar a carga administrativa geral de professores e gestores.',
     ]
   },
@@ -41,7 +42,7 @@ export const PAIN_POINTS: PainPoint[] = [
         'Encontrar e reter profissionais qualificados para atividades específicas.',
         'Atender alunos com dificuldades de aprendizagem.',
         'Implementar metodologias pedagógicas inovadoras.',
-        'Lidar com infraestrutura inadequada, especialmente na ed. infantil.',
+        'Lidar com infraestrutura inadequada.',
         'Atender à busca das famílias por desenvolvimento de habilidades humanas.',
     ]
   },
@@ -66,7 +67,7 @@ export const PAIN_POINTS: PainPoint[] = [
     icon: MarketIcon,
     details: [
         'Enfrentar intensa concorrência e diferenciar-se sem onerar a operação.',
-        'Lidar com a obsessão por resultados estatísticos e imagem da escola.',
+        'Lidar com a pressão por resultados estatísticos e a reputação da escola.',
         'Superar a barreira de admitir falhas para adotar soluções externas.',
         'Navegar no complexo e demorado processo de venda para escolas.',
     ]

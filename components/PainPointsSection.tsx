@@ -21,10 +21,10 @@ const PainPointCard: React.FC<{
   const { id, category, title, shortDescription, details, icon: Icon } = painPoint;
   
   const cardClasses = `
-    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full
+    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer
     ${isSelected 
       ? 'bg-lab-lavender/30 border-brand-primary shadow-xl scale-105' 
-      : 'bg-white border-gray-200 hover:shadow-lg hover:border-lab-blue'
+      : 'bg-white border-gray-200 hover:shadow-lg hover:border-lab-blue hover:-translate-y-1'
     }
   `;
   const iconColor = isSelected ? 'text-brand-primary' : 'text-brand-secondary';
@@ -36,12 +36,12 @@ const PainPointCard: React.FC<{
 
   return (
     <div className={cardClasses} onClick={() => onSelect(id)}>
-      <div className="flex items-center mb-4 cursor-pointer">
+      <div className="flex items-center mb-4">
         <Icon className={`w-10 h-10 mr-4 ${iconColor}`} />
         <span className={`font-semibold text-sm uppercase tracking-wider ${isSelected ? 'text-brand-primary' : 'text-gray-500'}`}>{category}</span>
       </div>
-      <h3 className="text-xl font-bold text-brand-text mb-2 cursor-pointer">{title}</h3>
-      <p className="text-brand-text-light text-sm flex-grow cursor-pointer">{shortDescription}</p>
+      <h3 className="text-xl font-bold text-brand-text mb-2">{title}</h3>
+      <p className="text-brand-text-light text-sm flex-grow">{shortDescription}</p>
       {isSelected && (
         <div className="mt-4 pt-4 border-t border-brand-primary/20">
             <p className="text-sm font-semibold text-brand-text mb-2">Marque os pontos específicos:</p>
@@ -51,7 +51,7 @@ const PainPointCard: React.FC<{
                     return (
                         <li 
                             key={index} 
-                            className={`flex items-start p-2 rounded-md cursor-pointer transition-colors ${isDetailSelected ? 'bg-lab-blue/30' : 'hover:bg-lab-blue/20'}`}
+                            className={`flex items-start p-2 rounded-md cursor-pointer transition-all duration-200 ${isDetailSelected ? 'bg-lab-blue/30' : 'hover:bg-lab-blue/30 hover:shadow-inner'}`}
                             onClick={(e) => handleDetailClick(e, detail)}
                         >
                             <CheckCircleIcon className={`w-5 h-5 mr-2 mt-0.5 flex-shrink-0 transition-colors ${isDetailSelected ? 'text-brand-primary' : 'text-gray-300'}`} />
