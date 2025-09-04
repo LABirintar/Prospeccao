@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useRef, useMemo, ComponentType } from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -151,7 +150,7 @@ const PAIN_POINTS: PainPoint[] = [
   {
     id: 'market_pressure',
     category: 'Mercado',
-    title: 'Pressão de Mercado e Imagem',
+    title: 'Pressão de Mercado e Reputação',
     shortDescription: 'Necessidade de se diferenciar da concorrência, gerenciar a imagem institucional e superar barreiras na adoção de novas soluções.',
     icon: MarketIcon,
     details: [
@@ -178,7 +177,7 @@ const SOLUTIONS: Solution[] = [
   },
   {
     id: 'sol_pedagogy',
-    title: 'Curadoria Pedagógica e Educadores de Ponta',
+    title: 'Curadoria Pedágogica e Educadores de Ponta',
     description: 'Oferecemos um portfólio de atividades inovadoras e uma rede de educadores qualificados, garantindo uma educação integral que desenvolve as habilidades do futuro.',
     relatedPainPointIds: ['ped_challenge'],
   },
@@ -234,7 +233,7 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-center items-center">
-        <Logo className="h-60" />
+        <Logo className="h-24" />
       </div>
     </header>
   );
@@ -244,7 +243,7 @@ const Hero: React.FC = () => {
   return (
     <section className="bg-white py-20 sm:py-24">
       <div className="container mx-auto px-6 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-brand-text leading-tight mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-brand-text-light leading-tight mb-4">
           Construindo o Ecossistema Nacional da Educação Integral
         </h1>
         <p className="text-lg md:text-xl text-brand-text-light max-w-3xl mx-auto">
@@ -272,7 +271,7 @@ const PainPointCard: React.FC<{
   const { id, category, title, shortDescription, details, icon: Icon } = painPoint;
   
   const cardClasses = `
-    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer relative group
+    p-6 rounded-xl border-2 transition-all duration-300 flex flex-col h-full cursor-pointer group
     ${isSelected 
       ? 'bg-lab-lavender/30 border-brand-primary shadow-xl scale-105' 
       : 'bg-white border-gray-200 hover:shadow-lg hover:border-lab-blue hover:-translate-y-1'
@@ -287,20 +286,24 @@ const PainPointCard: React.FC<{
 
   return (
     <div className={cardClasses} onClick={() => onSelect(id)}>
-      <div className="absolute top-4 right-4 transition-opacity duration-300">
-        {isSelected ? (
-            <CheckCircleIcon className="w-8 h-8 text-brand-primary" />
-        ) : (
-            <EmptyCircleIcon className="w-8 h-8 text-gray-300 group-hover:text-lab-blue" />
-        )}
-      </div>
-
       <div className="flex items-center mb-4">
         <Icon className={`w-10 h-10 mr-4 ${iconColor}`} />
         <span className={`font-semibold text-sm uppercase tracking-wider ${isSelected ? 'text-brand-primary' : 'text-gray-500'}`}>{category}</span>
       </div>
-      <h3 className="text-xl font-bold text-brand-text mb-2">{title}</h3>
+
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-xl font-bold text-brand-text mr-2">{title}</h3>
+        <div className="flex-shrink-0 transition-opacity duration-300">
+          {isSelected ? (
+              <CheckCircleIcon className="w-8 h-8 text-brand-primary" />
+          ) : (
+              <EmptyCircleIcon className="w-8 h-8 text-gray-300 group-hover:text-lab-blue" />
+          )}
+        </div>
+      </div>
+      
       <p className="text-brand-text-light text-sm flex-grow">{shortDescription}</p>
+      
       {isSelected && (
         <div className="mt-4 pt-4 border-t border-brand-primary/20">
             <p className="text-sm font-semibold text-brand-text mb-2">Marque os pontos específicos:</p>
