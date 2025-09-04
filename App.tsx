@@ -9,9 +9,7 @@ import SocialProof from './components/SocialProof';
 import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
 
-// !!! IMPORTANT !!!
-// Replace this with your actual Google Apps Script Web App URL
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SHEET_WEB_APP_URL';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyHGM_KL29i_VBETUYstMrUF-fcye_KRoIaYpK6IlOq0aHheXda3M6x-b-1KQ0EH8bu/exec';
 
 const App: React.FC = () => {
   const [selectedPainPointIds, setSelectedPainPointIds] = useState<string[]>([]);
@@ -78,25 +76,23 @@ const App: React.FC = () => {
       customPain: customPainText,
     };
 
+    // FIX: Removed an impossible condition that was checking for a placeholder URL.
+    // Since a real URL is provided in the GOOGLE_SCRIPT_URL constant, the check
+    // would always be false and was causing a TypeScript compilation error. The logic
+    // is now simplified to always attempt to submit the data.
     try {
-      if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SHEET_WEB_APP_URL') {
-        console.warn("Google Apps Script URL is not set. Skipping submission.");
-        // Simulate a successful submission for local testing
-        console.log("Submission Data (local simulation):", submissionData);
-      } else {
-        // We are using text/plain for the request to avoid CORS preflight issues with simple triggers
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors', 
-          headers: {
-            // Note: Content-Type is often omitted with no-cors to avoid preflight
-            // but we send it as text/plain and parse it in Apps Script
-          },
-          body: JSON.stringify(submissionData),
-        });
-        // no-cors mode means we can't read the response, so we optimistically proceed
-        console.log('Submission attempt finished.');
-      }
+      // We are using text/plain for the request to avoid CORS preflight issues with simple triggers
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: {
+          // Note: Content-Type is often omitted with no-cors to avoid preflight
+          // but we send it as text/plain and parse it in Apps Script
+        },
+        body: JSON.stringify(submissionData),
+      });
+      // no-cors mode means we can't read the response, so we optimistically proceed
+      console.log('Submission attempt finished.');
       
       setReportGenerated(true);
       setTimeout(() => {
