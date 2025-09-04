@@ -234,7 +234,7 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-center items-center">
-        <Logo className="h-60" />
+        <Logo className="h-12" />
       </div>
     </header>
   );
@@ -367,8 +367,6 @@ interface CustomPainPointsProps {
   onUserNameChange: (value: string) => void;
   schoolName: string;
   onSchoolNameChange: (value: string) => void;
-  whatsAppNumber: string;
-  onWhatsAppChange: (value: string) => void;
   onGenerateReport: () => void;
   isSubmitting: boolean;
 }
@@ -380,8 +378,6 @@ const CustomPainPoints: React.FC<CustomPainPointsProps> = ({
   onUserNameChange,
   schoolName,
   onSchoolNameChange,
-  whatsAppNumber,
-  onWhatsAppChange,
   onGenerateReport, 
   isSubmitting 
 }) => {
@@ -430,18 +426,6 @@ const CustomPainPoints: React.FC<CustomPainPointsProps> = ({
                   required
                 />
             </div>
-            <div className="text-center">
-                <label htmlFor="whatsapp" className="block font-semibold text-brand-text mb-2">Seu WhatsApp</label>
-                <input
-                  type="tel"
-                  id="whatsapp"
-                  className="w-full max-w-sm mx-auto block p-3 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-secondary focus:border-transparent transition"
-                  placeholder="(XX) XXXXX-XXXX"
-                  value={whatsAppNumber}
-                  onChange={(e) => onWhatsAppChange(e.target.value)}
-                  required
-                />
-            </div>
           </div>
 
            <div className="text-center mt-8">
@@ -466,10 +450,9 @@ interface DiagnosticReportProps {
   customPainText: string;
   userName: string;
   schoolName: string;
-  whatsAppNumber: string;
 }
 
-const DiagnosticReport: React.FC<DiagnosticReportProps> = ({ selectedPainPointIds, selectedDetails, customPainText, userName, schoolName, whatsAppNumber }) => {
+const DiagnosticReport: React.FC<DiagnosticReportProps> = ({ selectedPainPointIds, selectedDetails, customPainText, userName, schoolName }) => {
   
   const selectedPainPoints = useMemo(() => {
     return PAIN_POINTS.filter(pp => selectedPainPointIds.includes(pp.id));
@@ -602,9 +585,11 @@ const SocialProof: React.FC = () => {
 interface CallToActionProps {
   onConfirm: () => void;
   isSubmitting: boolean;
+  whatsAppNumber: string;
+  onWhatsAppChange: (value: string) => void;
 }
 
-const CallToAction: React.FC<CallToActionProps> = ({ onConfirm, isSubmitting }) => {
+const CallToAction: React.FC<CallToActionProps> = ({ onConfirm, isSubmitting, whatsAppNumber, onWhatsAppChange }) => {
   return (
     <section id="cocriar" className="py-24 bg-lab-blue/20">
       <div className="container mx-auto px-6 text-center">
@@ -612,8 +597,22 @@ const CallToAction: React.FC<CallToActionProps> = ({ onConfirm, isSubmitting }) 
           Vamos cocriar as soluções para a sua escola!
         </h2>
         <p className="text-lg md:text-xl text-brand-text-light max-w-3xl mx-auto mb-8">
-          Você gostaria que nossos especialistas entrassem em contato pelo WhatsApp que você forneceu para entender melhor sua realidade e, a partir daí, agendar uma conversa estratégica sobre como podemos cocriar as soluções para as dores da sua escola?
+          Você gostaria que nossos especialistas entrassem em contato para entender melhor sua realidade e, a partir daí, agendar uma conversa estratégica sobre como podemos cocriar as soluções para as dores da sua escola?
         </p>
+        
+        <div className="max-w-sm mx-auto mb-6">
+            <label htmlFor="whatsapp-cta" className="block font-semibold text-brand-text mb-2">Seu Melhor WhatsApp para Contato</label>
+            <input
+              type="tel"
+              id="whatsapp-cta"
+              className="w-full block p-3 text-center border border-gray-300 rounded-md focus:ring-2 focus:ring-brand-secondary focus:border-transparent transition"
+              placeholder="(XX) XXXXX-XXXX"
+              value={whatsAppNumber}
+              onChange={(e) => onWhatsAppChange(e.target.value)}
+              required
+            />
+        </div>
+
         <button
             onClick={onConfirm}
             disabled={isSubmitting}
@@ -688,10 +687,6 @@ const App: React.FC = () => {
         alert('Por favor, preencha seu nome e o nome da escola.');
         return;
     }
-    if (whatsAppNumber.trim().length < 10) {
-        alert('Por favor, insira um número de WhatsApp válido para receber o relatório.');
-        return;
-    }
 
     setIsSubmitting(true);
 
@@ -699,7 +694,7 @@ const App: React.FC = () => {
       timestamp: new Date().toISOString(),
       userName: userName,
       schoolName: schoolName,
-      whatsAppNumber: whatsAppNumber,
+      whatsAppNumber: 'N/A (preenchido no CTA)',
       selectedCategories: selectedPainPointIds.join(', '),
       selectedDetails: JSON.stringify(selectedDetails, null, 2),
       customPain: customPainText,
@@ -725,18 +720,23 @@ const App: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  }, [selectedPainPointIds, selectedDetails, customPainText, userName, schoolName, whatsAppNumber]);
+  }, [selectedPainPointIds, selectedDetails, customPainText, userName, schoolName]);
 
   const handleContactConsent = useCallback(async () => {
+    if (whatsAppNumber.trim().length < 10) {
+        alert('Por favor, insira um número de WhatsApp válido para entrarmos em contato.');
+        return;
+    }
+
     setIsCtaSubmitting(true);
     const submissionData = {
         timestamp: new Date().toISOString(),
         userName: userName,
         schoolName: schoolName,
         whatsAppNumber: whatsAppNumber,
-        selectedCategories: 'N/A',
-        selectedDetails: '{}',
-        customPain: 'O usuário solicitou contato através do botão CTA.',
+        selectedCategories: selectedPainPointIds.join(', '), // Send context
+        selectedDetails: JSON.stringify(selectedDetails, null, 2), // Send context
+        customPain: `Solicitou contato via CTA. Dor customizada: ${customPainText || 'Nenhuma.'}`,
         contactConsent: 'Sim',
       };
       try {
@@ -746,22 +746,22 @@ const App: React.FC = () => {
           body: JSON.stringify(submissionData),
         });
         console.log('Contact consent submission attempt finished.');
-        alert('Obrigado! Sua solicitação foi enviada. Entraremos em contato em breve.');
+        alert('Obrigado! Sua solicitação foi enviada. Entraremos em contato em breve pelo WhatsApp informado.');
       } catch (error) {
         console.error('Error submitting contact consent:', error);
         alert('Houve um erro ao enviar sua solicitação. Por favor, tente novamente.');
       } finally {
         setIsCtaSubmitting(false);
       }
-  }, [userName, schoolName, whatsAppNumber]);
+  }, [userName, schoolName, whatsAppNumber, selectedPainPointIds, selectedDetails, customPainText]);
 
   return (
     <div className="bg-brand-bg-light min-h-screen text-brand-text">
       <Header />
       <main>
-        <Hero />
         {!reportGenerated ? (
           <>
+            <Hero />
             <PainPointsSection 
               selectedPainPointIds={selectedPainPointIds} 
               onSelectPainPoint={handlePainPointSelect}
@@ -775,8 +775,6 @@ const App: React.FC = () => {
               onUserNameChange={setUserName}
               schoolName={schoolName}
               onSchoolNameChange={setSchoolName}
-              whatsAppNumber={whatsAppNumber}
-              onWhatsAppChange={setWhatsAppNumber}
               onGenerateReport={handleGenerateReport}
               isSubmitting={isSubmitting}
             />
@@ -789,10 +787,14 @@ const App: React.FC = () => {
               customPainText={customPainText}
               userName={userName}
               schoolName={schoolName}
-              whatsAppNumber={whatsAppNumber}
             />
             <SocialProof />
-            <CallToAction onConfirm={handleContactConsent} isSubmitting={isCtaSubmitting} />
+            <CallToAction 
+              onConfirm={handleContactConsent} 
+              isSubmitting={isCtaSubmitting} 
+              whatsAppNumber={whatsAppNumber}
+              onWhatsAppChange={setWhatsAppNumber}
+            />
           </div>
         )}
       </main>
