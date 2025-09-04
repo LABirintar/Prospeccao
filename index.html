@@ -49,7 +49,7 @@
 </head>
   <body>
     <div id="root"></div>
-    <!-- O tipo do script foi alterado para 'text/babel' para que o Babel o processe -->
-    <script type="text/babel" data-type="module" src="index.tsx"></script>
+    <!-- O tipo do script foi alterado para 'text/babel' e os presets foram adicionados para transpilar TSX -->
+    <script type="text/babel" data-presets="typescript,react" data-type="module" src="index.tsx"></script>
   </body>
 </html>
